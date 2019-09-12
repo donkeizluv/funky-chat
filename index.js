@@ -7,21 +7,21 @@ const io = require('socket.io').listen(server);
 const PORT = process.env.PORT || 8000;
 server.listen(PORT);
 
-const users = [];
+// const users = [];
 const connections = [];
 
 io.sockets.on('connection',(socket) => {
    connections.push(socket);
-   console.log(' %s sockets is connected', connections.length);
+   // console.log(' %s sockets is connected', connections.length);
 
    socket.on('disconnect', () => {
       connections.splice(connections.indexOf(socket), 1);
    });
 
    socket.on('sending message', (data) => {
-      console.log('Message is received from :', data.username);
+      // console.log('Message is received from :', data.username);
       io.sockets.emit('newMessage', data);
    });
 });
 
-app.use(require("./middlewares/static")(path.join(__dirname, "/ui/dist")));
+app.use(require("./middlewares/static")(path.join(__dirname, "/dist")));
