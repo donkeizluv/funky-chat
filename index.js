@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
-const PORT = process.env.PORT || 6969;
+const PORT = process.env.PORT || 8000;
 server.listen(PORT);
 
 const users = [];
@@ -24,4 +24,4 @@ io.sockets.on('connection',(socket) => {
    });
 });
 
-app.use(require("./middlewares/static")(path.join(__dirname, "/ui/funky-chat/dist")));
+app.use(require("./middlewares/static")(path.join(__dirname, "/ui/dist")));
