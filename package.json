@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "cd ui && run build"
+    "build": "cd ui && npm run build"
   },
   "author": "",
   "license": "ISC",
