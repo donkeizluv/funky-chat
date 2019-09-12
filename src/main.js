@@ -5,12 +5,15 @@ import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
-require('dotenv').config()
+let conn =
+  process.env.VUE_APP_ENV === "prod"
+    ? process.env.VUE_APP_BASE_URI
+    : "localhost:8000";
 
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: `${process.env.HOST || 'localhost'}:${process.env.PORT || 8000}`
+    connection: conn
   })
 );
 Vue.use(BootstrapVue);
