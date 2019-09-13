@@ -11,8 +11,8 @@
 import LoginForm from "./components/LoginForm.vue";
 import ChatBox from "./components/ChatBox.vue";
 import { mapActions, mapGetters } from "vuex";
-import { LOGIN, GEN_GUID } from "../store/actions/action-types";
-import { isAuthenticated, currentUser } from "../store/getters/getter-types";
+import { LOGIN, GEN_GUID } from "./store/actions/action-types";
+import { isAuthenticated, currentUser } from "./store/getters/getter-types";
 
 export default {
   name: "app",

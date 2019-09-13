@@ -107,14 +107,14 @@
 
 </template>
 <script>
-import { GEN_GUID, GEN_RANDOM_STRING } from "../../store/actions/action-types";
+import { GEN_GUID, GEN_RANDOM_STRING } from "../store/actions/action-types";
 import { mapActions, mapGetters } from "vuex";
 import {
   isAuthenticated,
   currentUser,
   isDev,
   isProd
-} from "../../store/getters/getter-types";
+} from "../store/getters/getter-types";
 const sendMessageAction = "sending message";
 export default {
   name: "ChatBox",

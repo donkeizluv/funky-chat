@@ -24,4 +24,4 @@ io.sockets.on('connection',(socket) => {
    });
 });
 
-app.use(require("./middlewares/static")(path.join(__dirname, "/dist")));
+app.use(require("./server/middlewares/static")(path.join(__dirname, "/dist")));
