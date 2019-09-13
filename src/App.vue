@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <view :is=currentView  @login=onLogin :username=username />
+    <view
+      :is=currentView
+      @login=onLogin
+    />
   </div>
 </template>
 
 <script>
 import LoginForm from "./components/LoginForm.vue";
 import ChatBox from "./components/ChatBox.vue";
+import { mapActions, mapGetters } from "vuex";
+import { LOGIN, GEN_GUID } from "../store/actions/action-types";
+import { isAuthenticated, currentUser } from "../store/getters/getter-types";
 
 export default {
   name: "app",
@@ -15,22 +21,24 @@ export default {
     ChatBox
   },
   computed: {
+    ...mapGetters([isAuthenticated, currentUser]),
     currentView() {
-      if(this.loggedin)
-        return "ChatBox"
-      return "LoginForm"
+      if (this.isAuthenticated) return ChatBox;
+      return LoginForm;
     }
   },
   data() {
     return {
-      loggedin: false,
-      username: ''
+      
     };
   },
-   methods: {
-    onLogin(cred) {
-      this.loggedin = true;
-      this.username = cred.username;
+  methods: {
+    ...mapActions([LOGIN, GEN_GUID]),
+    async onLogin(cred) {
+      await this.LOGIN({
+        userId: await this.GEN_GUID(),
+        username: cred.username
+      });
     }
   }
 };
