@@ -1,27 +1,34 @@
-const express = require('express');
-const path = require('path');
+/* eslint-disable no-console */
+const express = require("express");
+const path = require("path");
+const socketActions = require("./server/const/socketAction");
 
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io').listen(server);
+app.use(require("./server/middlewares/static")(path.join(__dirname, "/dist")));
+
+const server = require("http").createServer(app);
+const io = require("socket.io").listen(server);
 const PORT = process.env.PORT || 8000;
 server.listen(PORT);
 
 // const users = [];
 const connections = [];
 
-io.sockets.on('connection',(socket) => {
-   connections.push(socket);
-   // console.log(' %s sockets is connected', connections.length);
+io.sockets.on("connection", socket => {
+  connections.push(socket);
 
-   socket.on('disconnect', () => {
-      connections.splice(connections.indexOf(socket), 1);
-   });
+  socket.on("disconnect", () => {
+    connections.splice(connections.indexOf(socket), 1);
+  });
 
-   socket.on('sending message', (data) => {
-      // console.log('Message is received from :', data.username);
-      io.sockets.emit('newMessage', data);
-   });
+  // broacasts
+  socket.on(socketActions.SEND_MESSAGE, data => {
+    io.sockets.emit(socketActions.ON_RECEIVED_MESSAGE, data);
+  });
+
+  socket.on(socketActions.SEND_GREETING, data => {
+    io.sockets.emit(socketActions.ON_RECEIVED_GREETING, data);
+  });
 });
 
-app.use(require("./server/middlewares/static")(path.join(__dirname, "/dist")));
+

@@ -15,8 +15,8 @@
               v-model="cred.username"
               type="text"
               required
-              placeholder="Username"
-            ></b-form-input>
+              placeholder="Username">
+            </b-form-input>
             <b-button
               :disabled="!canSubmit"
               type="submit"

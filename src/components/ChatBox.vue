@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 <template>
   <b-container fluid>
     <div
@@ -75,19 +76,20 @@
     &nbsp;
     &nbsp;
     <b-row class="justify-content-center">
-      <b-col sm="auto">
+      <b-col cols="2">
         <b-form
           autocomplete="off"
           inline
           @submit.stop.prevent
         >
           <b-form-group
-            id="input-group-1"
-            label-for="input-1"
+            class="form-group-new-message"
+            label-for="input-message"
+            :description="`${newMessage.length}/${maxMessageLength}`"
           >
             <b-form-input
-              maxlength=128
-              id="input-1"
+              id="input-message"
+              :maxlength=maxMessageLength
               v-model="newMessage"
               type="text"
               @keyup.enter.native="submitMessage"
@@ -107,63 +109,80 @@
 
 </template>
 <script>
-import { GEN_GUID, GEN_RANDOM_STRING } from "../store/actions/action-types";
 import { mapActions, mapGetters } from "vuex";
+import { GEN_GUID, GEN_RANDOM_STRING } from "../store/actions/action-types";
+import {
+  SUBMIT_NEW_MESSAGE,
+  SEND_GREETING,
+  ADD_TEST_MESSAGES
+} from "../store/actions/chatbox/action-types";
+import { messages, lastGreeting } from "../store/getters/chatbox/getters-type";
 import {
   isAuthenticated,
   currentUser,
   isDev,
   isProd
 } from "../store/getters/getter-types";
-const sendMessageAction = "sending message";
+
+const CHATBOX_STORE = "chatbox";
+
 export default {
   name: "ChatBox",
   sockets: {
     connect() {
       // eslint-disable-next-line no-console
       // console.log("socket connected");
-    },
-    newMessage(data) {
-      this.onNewMessageReceived(data);
     }
   },
+  watch: {
+    messages() {
+      let vm = this;
+      // scroll after render is completed to prevent missing last line
+      vm.$nextTick(() => {
+        vm.scrollDownBottom();
+      });
+    }
+    // lastGreeting() {
+
+    // }
+  },
   async mounted() {
+    await this.SEND_GREETING({ vm: this });
     if (this.isDev) {
-      await this.addTestMessages(15);
+      this.ADD_TEST_MESSAGES(111);
     }
   },
   computed: {
+    ...mapGetters(CHATBOX_STORE, [messages, lastGreeting]),
     ...mapGetters([isAuthenticated, currentUser, isDev, isProd]),
     canSubmitNewMessage() {
       return this.newMessage.trim() !== "";
     }
   },
+  props: {
+    maxMessageLength: {
+      type: Number,
+      default: 128
+    }
+  },
   data() {
     return {
-      messages: [],
+      // messages: [],
       newMessage: ""
     };
   },
   methods: {
+    ...mapActions(CHATBOX_STORE, [
+      SUBMIT_NEW_MESSAGE,
+      SEND_GREETING,
+      ADD_TEST_MESSAGES
+    ]),
     ...mapActions([GEN_GUID, GEN_RANDOM_STRING]),
+
     async submitMessage() {
       if (!this.canSubmitNewMessage) return;
-      let newMessage = await this.createNewMessage(this.newMessage.trim());
+      await this.SUBMIT_NEW_MESSAGE({ vm: this, message: this.newMessage });
       this.clearNewMessage();
-      // this.messages.push(newMessage);
-      this.$socket.emit(sendMessageAction, newMessage);
-    },
-    addMessage(message) {
-      this.messages.push(message);
-    },
-    async createNewMessage(mess) {
-      return {
-        me: true,
-        username: this.currentUser.username,
-        guid: await this.GEN_GUID(),
-        stamp: new Date(),
-        mess: mess
-      };
     },
     clearNewMessage() {
       this.newMessage = "";
@@ -171,35 +190,6 @@ export default {
     scrollDownBottom() {
       let chatArea = this.$refs.chatarea;
       chatArea.scrollTop = chatArea.scrollHeight;
-    },
-    onNewMessageReceived(data) {
-      let message = {
-        me: this.currentUser.username === data.username,
-        username: data.username,
-        guid: data.guid,
-        stamp: data.stamp,
-        mess: data.mess
-      };
-      this.addMessage(message);
-      if (message.me) {
-        let vm = this;
-        // scroll after render is completed to prevent missing last line
-        this.$nextTick(() => {
-          vm.scrollDownBottom();
-        });
-      }
-    },
-    async addTestMessages(messageCount) {
-      for (let index = 0; index < messageCount; index++) {
-        let mess = await this.createNewMessage(
-          await this.GEN_RANDOM_STRING(10)
-        );
-        if (index % 2) {
-          mess.me = false;
-          mess.username = `${mess.username}_2`;
-        }
-        await this.addMessage(mess);
-      }
     }
   }
 };
@@ -212,10 +202,10 @@ export default {
 }
 .chatarea {
   display: inline-block;
+  height: 500px;
   max-height: 500px;
   max-width: 800px;
   width: 100%;
-  height: 80%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -253,7 +243,7 @@ export default {
   text-align: left;
   background-color: #6c757d;
 }
-
-@media (max-width: 690px) {
+.form-group-new-message {
+  text-align: left;
 }
 </style>
