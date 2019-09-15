@@ -86,9 +86,10 @@ const actions = {
     commit(SET_LAST_GREETING, p);
   },
   [FETCH_MESSAGES]: async ({ commit }) => {
+    let { data } = await axios.get(apis.fetchMessages, { crossdomain: true });
     commit(
       ADD_MESSAGES,
-      await axios.get(apis.fetchMessages, { crossdomain: true })
+      data
     );
   },
   [ADD_TEST_MESSAGES]: async ({ dispatch, commit, rootState }, p) => {
