@@ -114,7 +114,8 @@ import { GEN_GUID, GEN_RANDOM_STRING } from "../store/actions/action-types";
 import {
   SUBMIT_NEW_MESSAGE,
   SEND_GREETING,
-  ADD_TEST_MESSAGES
+  ADD_TEST_MESSAGES,
+  FETCH_MESSAGES
 } from "../store/actions/chatbox/action-types";
 import { messages, lastGreeting } from "../store/getters/chatbox/getters-type";
 import {
@@ -148,6 +149,7 @@ export default {
   },
   async mounted() {
     await this.SEND_GREETING({ vm: this });
+    await this.FETCH_MESSAGES();
     if (this.isDev) {
       this.ADD_TEST_MESSAGES(111);
     }
@@ -175,7 +177,8 @@ export default {
     ...mapActions(CHATBOX_STORE, [
       SUBMIT_NEW_MESSAGE,
       SEND_GREETING,
-      ADD_TEST_MESSAGES
+      ADD_TEST_MESSAGES,
+      FETCH_MESSAGES
     ]),
     ...mapActions([GEN_GUID, GEN_RANDOM_STRING]),
 

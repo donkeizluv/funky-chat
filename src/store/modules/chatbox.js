@@ -1,10 +1,13 @@
 /* eslint-disable no-console */
+import axios from "axios";
+// names
 import { GEN_GUID } from "../actions/action-types";
 import {
   SEND_GREETING,
   SUBMIT_NEW_MESSAGE,
   REMOVE_MESSAGES,
   ADD_TEST_MESSAGES,
+  FETCH_MESSAGES,
   SOCKET_ON_RECEIVED_MESSAGE,
   SOCKET_ON_RECEIVED_GREETING
 } from "../actions/chatbox/action-types";
@@ -13,6 +16,11 @@ import {
   SET_LAST_GREETING
 } from "../mutations/chatbox/mutation-types";
 import { messages, lastGreeting } from "../getters/chatbox/getters-type";
+// apis
+import apis from "../apis/apis";
+
+// configs
+const MESSAGE_LIMIT = 500;
 
 // server side Socket events
 const SEND_MESSAGE_SOCKET = "SEND_MESSAGE";
@@ -29,9 +37,16 @@ const getters = {
 
 const mutations = {
   [ADD_MESSAGES]: (s, v) => {
+    if (!v) return;
     if (Array.isArray(v)) {
       s.messages = s.messages.concat(v);
+      if (s.messages.length > MESSAGE_LIMIT) {
+        s.messages.splice(0, s.messages.length - MESSAGE_LIMIT);
+      }
       return;
+    }
+    if (s.messages.length > MESSAGE_LIMIT + 1) {
+      s.messages.splice(0, 1);
     }
     s.messages.push(v);
   },
@@ -69,6 +84,12 @@ const actions = {
   },
   [SOCKET_ON_RECEIVED_GREETING]: ({ commit }, p) => {
     commit(SET_LAST_GREETING, p);
+  },
+  [FETCH_MESSAGES]: async ({ commit }) => {
+    commit(
+      ADD_MESSAGES,
+      await axios.get(apis.fetchMessages, { crossdomain: true })
+    );
   },
   [ADD_TEST_MESSAGES]: async ({ dispatch, commit, rootState }, p) => {
     let messages = [];
