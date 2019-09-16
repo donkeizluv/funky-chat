@@ -1,3 +1,3 @@
 export default {
-    fetchMessages: "/messages"
+    fetchMessages: "/message/all"
 }
