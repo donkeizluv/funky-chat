@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import axios from "axios";
+import socketInstance from "../../utility/socket-instance";
 // names
 import { GEN_GUID } from "../actions/action-types";
 import {
@@ -64,12 +65,12 @@ const actions = {
       username: rootState.currentUser.username,
       guid: await dispatch(GEN_GUID, null, { root: true }),
       stamp: new Date(),
-      mess: p.message
+      mess: p
     };
-    p.vm.$socket.emit(SEND_MESSAGE_SOCKET, message);
+    socketInstance.emit(SEND_MESSAGE_SOCKET, message);
   },
-  [SEND_GREETING]: ({ rootState }, p) => {
-    p.vm.$socket.emit(SEND_GREETING_SOCKET, rootState.currentUser);
+  [SEND_GREETING]: ({ rootState }) => {
+    socketInstance.emit(SEND_GREETING_SOCKET, rootState.currentUser);
   },
   [SOCKET_ON_RECEIVED_MESSAGE]: ({ commit, rootState }, p) => {
     let message = {

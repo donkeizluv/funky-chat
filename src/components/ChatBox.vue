@@ -148,11 +148,11 @@ export default {
     // }
   },
   async mounted() {
-    await this.SEND_GREETING({ vm: this });
+    await this.SEND_GREETING();
     await this.FETCH_MESSAGES();
-    if (this.isDev) {
-      this.ADD_TEST_MESSAGES(111);
-    }
+    // if (this.isDev) {
+    //   this.ADD_TEST_MESSAGES(111);
+    // }
   },
   computed: {
     ...mapGetters(CHATBOX_STORE, [messages, lastGreeting]),
@@ -184,7 +184,7 @@ export default {
 
     async submitMessage() {
       if (!this.canSubmitNewMessage) return;
-      await this.SUBMIT_NEW_MESSAGE({ vm: this, message: this.newMessage });
+      await this.SUBMIT_NEW_MESSAGE(this.newMessage);
       this.clearNewMessage();
     },
     clearNewMessage() {

@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
+require('dotenv').config()
 const express = require("express");
 const path = require("path");
 const bodyparser = require("body-parser");
 // configs
 const PORT = process.env.PORT || 8000;
 const mongoose = require("mongoose");
-const connStr =
-  process.env.connStr ||
-  "mongodb://localhost";
-
+const connStr = process.env.MONGODB_URI
 // init
 const app = express();
 app.use(bodyparser.json());
@@ -32,4 +30,4 @@ app.use(require("./server/middlewares/cors"));
 app.use(require("./server/middlewares/static")(path.join(__dirname, "/dist")));
 
 // routes
-app.use("/message", require("./server/routes/message"));
+app.use("/api/message", require("./server/routes/message"));

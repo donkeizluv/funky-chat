@@ -1,3 +1,3 @@
 export default {
-    fetchMessages: "/message/all"
-}
+  fetchMessages: "api/message/all"
+};

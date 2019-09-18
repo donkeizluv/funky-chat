@@ -11,16 +11,18 @@ exports.start = server => {
     });
     // broacasts
     socket.on(socketActions.SEND_MESSAGE, data => {
+      // console.log("mess arrived!");
       messageRepo
         .create(data)
         .then(() => {})
         .catch(err => {
-            // log
+          // log
         });
       io.sockets.emit(socketActions.ON_RECEIVED_MESSAGE, data);
     });
 
     socket.on(socketActions.SEND_GREETING, data => {
+      // console.log("client connected!");
       io.sockets.emit(socketActions.ON_RECEIVED_GREETING, data);
     });
   });
