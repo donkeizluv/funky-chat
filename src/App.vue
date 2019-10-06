@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div class="stars"></div>
-    <div class="stars1"></div>
-    <div class="stars2"></div>
+    <app-bg :show="isAuthenticated" />
     <login-modal
       @submit="loginSubmit"
       :show="!isAuthenticated"
@@ -48,6 +46,7 @@ import LoginModal from "./components/shared/LoginModal";
 import ChatBox from "./components/ChatBox.vue";
 import CurrentUserPanel from "./components/CurrentUserPanel.vue";
 import ContactListPanel from "./components/ContactListPanel.vue";
+import AppBg from "./components/shared/AppBackground";
 import { mapActions, mapGetters } from "vuex";
 import { LOGIN, GEN_GUID } from "./store/actions/action-types";
 import { isAuthenticated, currentUser } from "./store/getters/getter-types";
@@ -58,7 +57,8 @@ export default {
     LoginModal,
     ChatBox,
     CurrentUserPanel,
-    ContactListPanel
+    ContactListPanel,
+    AppBg
   },
   computed: {
     ...mapGetters([isAuthenticated, currentUser]),

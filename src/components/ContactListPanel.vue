@@ -29,5 +29,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../styles/modules/contact-list-panel.scss";
-
 </style>
