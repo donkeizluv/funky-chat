@@ -1,27 +1,23 @@
 /* eslint-disable no-console */
 <template>
-  <b-container fluid>
+  <div>
     <div
-      class="chatarea chatarea-border"
+      class="panel panel-border"
       ref="chatarea"
     >
       <b-row
-        class="justify-content-center mt-2 mb-4"
         v-for="mess in messages"
         :key=mess.guid
+        :class="['mt-2', 'mb-4', mess.me ? 'justify-content-end' : 'justify-content-start']"
       >
         <template v-if="mess.me">
-          <!-- left most -->
+          <!-- right side text -->
           <b-col
-            class="text-right"
+            class="text-right mr-4"
             cols=1
             order=3
           >
-            <!-- <b-badge
-            class="badge-username"
-            variant="success"
-          >: {{mess.username}}</b-badge> -->
-            <span class="badge-username d-inline-block pl-0">
+            <span class="username-me d-inline-block pl-0">
               :{{mess.username}}
             </span>
           </b-col>
@@ -41,22 +37,18 @@
           </b-col>
         </template>
         <template v-else>
-          <!-- left most -->
+          <!-- left side text -->
           <b-col
-            class="text-left"
+            class="text-left ml-2"
             cols=1
             order=1
           >
-            <!-- <b-badge
-            class="badge-username"
-            variant="secondary"
-          >{{mess.username}} :</b-badge> -->
-            <span class="badge-username d-inline-block">
+            <span class="username-others d-inline-block">
               {{mess.username}}:
             </span>
           </b-col>
           <b-col
-            class="text-left"
+            class="text-left pl-3"
             order=2
             cols=4
           >
@@ -72,40 +64,43 @@
         </template>
       </b-row>
     </div>
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    <b-row class="justify-content-center">
-      <b-col cols="2">
+    <b-row>
+      <b-col sm>
         <b-form
+          class="form-inline justify-content-end"
           autocomplete="off"
-          inline
           @submit.stop.prevent
         >
-          <b-form-group
-            class="form-group-new-message"
-            label-for="input-message"
-            :description="`${newMessage.length}/${maxMessageLength}`"
-          >
+          <b-form-group class="custom-text-input-border pr-3">
             <b-form-input
-              id="input-message"
+              class="custom-control-inline custom-text-input"
               :maxlength=maxMessageLength
               v-model="newMessage"
               type="text"
+              size="sm"
               @keyup.enter.native="submitMessage"
             ></b-form-input>
-            &nbsp;
-            <b-button
-              size="sm"
+            <!-- <b-button
+              class="custom-control-inline"
               :disabled="!canSubmitNewMessage"
               @click="submitMessage"
-              variant="primary"
-            >Send</b-button>
+              variant="outline-primary"
+            >
+              <i
+                @click="submitMessage"
+                :disabled="!canSubmitNewMessage"
+               class="fas fa-paper-plane"></i>
+            </b-button> -->
+
+            <i
+              @click="submitMessage"
+              class="send-icon fas fa-paper-plane"
+            ></i>
           </b-form-group>
         </b-form>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 
 </template>
 <script>
@@ -198,28 +193,51 @@ export default {
 };
 </script>
 <style scoped>
-.chatarea-border {
-  border: solid;
-  border-color: gainsboro;
-  border-radius: 0.25rem;
+.panel-border {
+  border: 2px;
+  border-style: solid;
+  border-color: rgb(76, 86, 122);
+  border-left-width: 1px;
+  border-right-width: 1px;
 }
-.chatarea {
+.panel {
   display: inline-block;
-  height: 500px;
-  max-height: 500px;
-  max-width: 800px;
+  height: 600px;
+  max-height: 550px;
   width: 100%;
-  overflow-y: scroll;
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
   overflow-x: hidden;
 }
-.chatbox-bg {
-  background: rgb(250, 250, 250);
+.panel::-webkit-scrollbar-track {
+  -webkit-box-shadow: 0;
+  box-shadow: 0;
+  background-color: transparent;
 }
-.badge-username {
+
+.panel::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.panel::-webkit-scrollbar-thumb {
+  background-color: rgb(187, 187, 187);
+  border-radius: 1rem;
+}
+
+.username-others {
   padding: 0.25em 0.4em;
   font-size: 13px;
   font-weight: bold;
   line-height: 16px;
+  color: gainsboro;
+}
+.username-me {
+  padding: 0.25em 0.4em;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 16px;
+  color: forestgreen;
 }
 .message-text {
   max-width: 100%;
@@ -248,5 +266,27 @@ export default {
 }
 .form-group-new-message {
   text-align: left;
+}
+.send-icon {
+  color: #007bff;
+}
+.send-icon:hover {
+  cursor: pointer;
+}
+.custom-text-input-border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: rgb(76, 86, 122);
+  border-bottom-right-radius: 0.5rem;
+}
+.custom-text-input {
+  background: transparent;
+  color: lightgray;
+  border: 0;
+}
+.custom-text-input:focus {
+  background: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 </style>

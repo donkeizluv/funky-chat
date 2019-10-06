@@ -1,15 +1,33 @@
 <template>
   <div id="app">
-    <view
-      :is=currentView
-      @login=onLogin
+    <div class="stars"></div>
+    <div class="stars1"></div>
+    <div class="stars2"></div>
+    <login-modal
+      @submit="loginSubmit"
+      :show="!isAuthenticated"
     />
+    <b-container fluid class="mx-auto">
+      <b-row class="justify-content-center">
+        <b-col class="p-0" cols=2 xl=2 lg=2 md=2>
+          <contact-list-panel :contacts="fakeContacts" />
+        </b-col>
+        <b-col class="p-0" cols=8 xl=5 md=8>
+          <chat-box />
+        </b-col>
+        <b-col class="p-0" cols=2 xl=2 lg=2 md=2>
+          <current-user-panel :users="fakeUsers" />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import LoginForm from "./components/LoginForm.vue";
+import LoginModal from "./components/shared/LoginModal";
 import ChatBox from "./components/ChatBox.vue";
+import CurrentUserPanel from "./components/CurrentUserPanel.vue";
+import ContactListPanel from "./components/ContactListPanel.vue";
 import { mapActions, mapGetters } from "vuex";
 import { LOGIN, GEN_GUID } from "./store/actions/action-types";
 import { isAuthenticated, currentUser } from "./store/getters/getter-types";
@@ -17,24 +35,40 @@ import { isAuthenticated, currentUser } from "./store/getters/getter-types";
 export default {
   name: "app",
   components: {
-    LoginForm,
-    ChatBox
+    LoginModal,
+    ChatBox,
+    CurrentUserPanel,
+    ContactListPanel
   },
   computed: {
     ...mapGetters([isAuthenticated, currentUser]),
-    currentView() {
-      if (this.isAuthenticated) return ChatBox;
-      return LoginForm;
-    }
+    fakeUsers: () => [
+      "userA",
+      "user_b",
+      "user_c",
+      "user_d",
+      "user_e",
+      "user_f",
+      "user_g",
+      "user_h"
+    ],
+    fakeContacts: () => [
+      "contact_A",
+      "contact_b",
+      "contact_c",
+      "contact_d",
+      "contact_e",
+      "contact_f",
+      "contact_g",
+      "contact_h"
+    ]
   },
   data() {
-    return {
-      
-    };
+    return {};
   },
   methods: {
     ...mapActions([LOGIN, GEN_GUID]),
-    async onLogin(cred) {
+    async loginSubmit(cred) {
       await this.LOGIN({
         userId: await this.GEN_GUID(),
         username: cred.username
