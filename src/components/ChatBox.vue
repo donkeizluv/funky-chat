@@ -119,7 +119,6 @@ import {
   isDev,
   isProd
 } from "../store/getters/getter-types";
-
 const CHATBOX_STORE = "chatbox";
 
 export default {
@@ -192,101 +191,6 @@ export default {
   }
 };
 </script>
-<style scoped>
-.panel-border {
-  border: 2px;
-  border-style: solid;
-  border-color: rgb(76, 86, 122);
-  border-left-width: 1px;
-  border-right-width: 1px;
-}
-.panel {
-  display: inline-block;
-  height: 600px;
-  max-height: 550px;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-.panel::-webkit-scrollbar-track {
-  -webkit-box-shadow: 0;
-  box-shadow: 0;
-  background-color: transparent;
-}
-
-.panel::-webkit-scrollbar {
-  width: 6px;
-  background-color: transparent;
-}
-
-.panel::-webkit-scrollbar-thumb {
-  background-color: rgb(187, 187, 187);
-  border-radius: 1rem;
-}
-
-.username-others {
-  padding: 0.25em 0.4em;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 16px;
-  color: gainsboro;
-}
-.username-me {
-  padding: 0.25em 0.4em;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 16px;
-  color: forestgreen;
-}
-.message-text {
-  max-width: 100%;
-  width: auto;
-  display: block;
-  border-radius: 0.25rem;
-  overflow-wrap: break-word;
-  padding: 0.25em 0.4em;
-  margin: 0;
-}
-.message-text-font {
-  color: white;
-  font-size: 13px;
-  line-height: 16px;
-  font-weight: normal;
-}
-.message-text-me {
-  float: right;
-  text-align: right;
-  background-color: #28a745;
-}
-.message-text-other {
-  float: left;
-  text-align: left;
-  background-color: #6c757d;
-}
-.form-group-new-message {
-  text-align: left;
-}
-.send-icon {
-  color: #007bff;
-}
-.send-icon:hover {
-  cursor: pointer;
-}
-.custom-text-input-border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: rgb(76, 86, 122);
-  border-bottom-right-radius: 0.5rem;
-}
-.custom-text-input {
-  background: transparent;
-  color: lightgray;
-  border: 0;
-}
-.custom-text-input:focus {
-  background: transparent;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
+<style lang="scss" scoped>
+@import "../styles/modules/chatbox.scss";
 </style>

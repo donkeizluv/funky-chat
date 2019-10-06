@@ -7,15 +7,35 @@
       @submit="loginSubmit"
       :show="!isAuthenticated"
     />
-    <b-container fluid class="mx-auto">
+    <b-container
+      fluid
+      class="mx-auto"
+    >
       <b-row class="justify-content-center">
-        <b-col class="p-0" cols=2 xl=2 lg=2 md=2>
+        <b-col
+          class="p-0"
+          cols=2
+          xl=2
+          lg=2
+          md=2
+        >
           <contact-list-panel :contacts="fakeContacts" />
         </b-col>
-        <b-col class="p-0" cols=8 xl=5 md=8>
+        <b-col
+          class="p-0"
+          cols=8
+          xl=5
+          md=8
+        >
           <chat-box />
         </b-col>
-        <b-col class="p-0" cols=2 xl=2 lg=2 md=2>
+        <b-col
+          class="p-0"
+          cols=2
+          xl=2
+          lg=2
+          md=2
+        >
           <current-user-panel :users="fakeUsers" />
         </b-col>
       </b-row>
@@ -78,7 +98,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

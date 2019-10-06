@@ -1,0 +1,72 @@
+%chatbox-username {
+  padding: 0.25em 0.4em;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 16px;
+}
+.username-others {
+  @extend %chatbox-username;
+  color: gainsboro;
+}
+.username-me {
+  @extend %chatbox-username;
+  color: forestgreen;
+}
+.panel-border {
+  @extend %panel-border;
+  border-left-width: 1px;
+  border-right-width: 1px;
+}
+.panel {
+  @extend %panel-base;
+}
+.message-text {
+  max-width: 100%;
+  width: auto;
+  display: block;
+  border-radius: 0.25rem;
+  overflow-wrap: break-word;
+  padding: 0.25em 0.4em;
+  margin: 0;
+}
+.message-text-font {
+  color: white;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: normal;
+}
+.message-text-me {
+  float: right;
+  text-align: right;
+  background-color: #28a745;
+}
+.message-text-other {
+  float: left;
+  text-align: left;
+  background-color: #6c757d;
+}
+.form-group-new-message {
+  text-align: left;
+}
+.send-icon {
+  color: #007bff;
+}
+.send-icon:hover {
+  cursor: pointer;
+}
+.custom-text-input-border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: rgb(76, 86, 122);
+  border-bottom-right-radius: 0.5rem;
+}
+.custom-text-input {
+  background: transparent;
+  color: lightgray;
+  border: 0;
+}
+.custom-text-input:focus {
+  background: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

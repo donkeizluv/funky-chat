@@ -1,0 +1,33 @@
+%panel-border {
+  border: 2px;
+  border-style: solid;
+  border-color: $panel-border-color;
+  border-left-width: 1px;
+  border-right-width: 1px;
+}
+
+%panel-base {
+  display: inline-block;
+  height: $panel-height;
+  max-height: $panel-max-height;
+  // max-width: $panel-max-width;
+  width: 100%;
+  background-color: $panel-bg;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.panel::-webkit-scrollbar-track {
+  -webkit-box-shadow: 0;
+  box-shadow: 0;
+  background-color: transparent;
+}
+
+.panel::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.panel::-webkit-scrollbar-thumb {
+  background-color: rgb(187, 187, 187);
+  border-radius: 1rem;
+}
