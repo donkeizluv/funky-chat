@@ -15,23 +15,12 @@
           class="mt-2"
           v-model="cred.username"
           type="text"
+          :maxlength="usernameLength"
           required
           placeholder="Username"
-        >
-        </b-form-input>
-        <b-form-input
-          class="mt-3"
-          type="password"
-          placeholder="Password"
-        >
-        </b-form-input>
-        <b-button
-          class="mt-3"
-          @click="onSubmit"
-          :disabled="!canSubmit"
-          variant="primary"
-        >Submit</b-button>
-
+        ></b-form-input>
+        <b-form-input class="mt-3" type="password" placeholder="Password"></b-form-input>
+        <b-button class="mt-3" @click="onSubmit" :disabled="!canSubmit" variant="primary">Submit</b-button>
       </b-form-group>
     </div>
   </b-modal>
@@ -49,6 +38,10 @@ export default {
     show: {
       type: Boolean,
       required: true
+    },
+    usernameLength: {
+      type: Number,
+      default: 10
     }
   },
   computed: {

@@ -1,14 +1,8 @@
 <template>
   <div class="panel panel-border">
-    <b-row
-      v-for="user in users"
-      :key="user"
-      class="p-1"
-    >
+    <b-row v-for="user in users" :key="user" class="p-1">
       <b-col>
-        <span class="entry entry-font">
-          {{user}}
-        </span>
+        <span class="entry entry-font">{{user}}</span>
       </b-col>
     </b-row>
   </div>

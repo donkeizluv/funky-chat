@@ -1,107 +1,58 @@
-/* eslint-disable no-console */
 <template>
   <div>
-    <div
-      class="panel panel-border"
-      ref="chatarea"
-    >
-      <b-row
-        v-for="mess in messages"
-        :key=mess.guid
-        :class="['mt-2', 'mb-4', mess.me ? 'justify-content-end' : 'justify-content-start']"
-      >
+    <div class="panel panel-border" ref="chatarea">
+      <b-row v-for="mess in messages" :key="mess.guid" class="m-2">
         <template v-if="mess.me">
           <!-- right side text -->
-          <b-col
-            class="text-right mr-4"
-            cols=1
-            order=3
-          >
-            <span class="username-me d-inline-block pl-0">
-              :{{mess.username}}
-            </span>
-          </b-col>
-          <b-col
-            class="text-right pr-0"
-            order=2
-            cols=4
-          >
-            <span class="message-text message-text-font message-text-me">
-              {{mess.mess}}</span>
-          </b-col>
-          <b-col
-            cols="6"
-            order="1"
-          >
-            <!-- padding -->
+          <b-col>
+            <b-row class="justify-content-end">
+              <div class="message-text message-text-font message-text-me">{{mess.mess}}</div>
+              <!-- <message-entry
+                :username="mess.username"
+                :message="mess.mess"
+                :me="mess.me"
+                :id="mess.guid"
+              />-->
+            </b-row>
           </b-col>
         </template>
         <template v-else>
           <!-- left side text -->
-          <b-col
-            class="text-left ml-2"
-            cols=1
-            order=1
-          >
-            <span class="username-others d-inline-block">
-              {{mess.username}}:
-            </span>
-          </b-col>
-          <b-col
-            class="text-left pl-3"
-            order=2
-            cols=4
-          >
-            <span class="message-text message-text-font message-text-other">
-              {{mess.mess}}</span>
-          </b-col>
-          <b-col
-            cols="6"
-            order="3"
-          >
-            <!-- padding -->
+          <b-col>
+            <b-row class="justify-content-start">
+              <div class="message-text message-text-font message-text-other">
+                <div class="username-others">{{mess.username}}:</div>
+                <div>{{mess.mess}}</div>
+              </div>
+              <!-- <message-entry
+                :username="mess.username"
+                :message="mess.mess"
+                :me="mess.me"
+                :id="mess.guid"
+              />-->
+            </b-row>
           </b-col>
         </template>
       </b-row>
     </div>
     <b-row>
-      <b-col sm>
-        <b-form
-          class="form-inline justify-content-end"
-          autocomplete="off"
-          @submit.stop.prevent
-        >
+      <b-col>
+        <b-form class="form-inline justify-content-end" autocomplete="off" @submit.stop.prevent>
           <b-form-group class="custom-text-input-border pr-3">
             <b-form-input
               class="custom-control-inline custom-text-input"
-              :maxlength=maxMessageLength
+              :maxlength="maxMessageLength"
               v-model="newMessage"
               type="text"
               size="sm"
               @keyup.enter.native="submitMessage"
             ></b-form-input>
-            <!-- <b-button
-              class="custom-control-inline"
-              :disabled="!canSubmitNewMessage"
-              @click="submitMessage"
-              variant="outline-primary"
-            >
-              <i
-                @click="submitMessage"
-                :disabled="!canSubmitNewMessage"
-               class="fas fa-paper-plane"></i>
-            </b-button> -->
-
-            <i
-              @click="submitMessage"
-              class="send-icon fas fa-paper-plane"
-            ></i>
+            <i @click="submitMessage" class="send-icon fas fa-paper-plane"></i>
           </b-form-group>
         </b-form>
       </b-col>
     </b-row>
   </div>
-
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -119,6 +70,9 @@ import {
   isDev,
   isProd
 } from "../store/getters/getter-types";
+// some problem with 2 root elements
+// import MessageEntry from "./shared/MessageEntry";
+
 const CHATBOX_STORE = "chatbox";
 
 export default {
@@ -129,6 +83,9 @@ export default {
       // console.log("socket connected");
     }
   },
+  // components: {
+  //   MessageEntry
+  // },
   watch: {
     messages() {
       let vm = this;

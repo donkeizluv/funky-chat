@@ -31,3 +31,4 @@ app.use(require("./server/middlewares/static")(path.join(__dirname, "/dist")));
 
 // routes
 app.use("/api/message", require("./server/routes/message"));
+app.use("/api/user", require("./server/routes/user"));

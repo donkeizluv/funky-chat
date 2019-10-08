@@ -1,12 +1,12 @@
 %chatbox-username {
-  padding: 0.25em 0.4em;
-  font-size: 13px;
+  padding: 0.2rem 0rem 0.2rem;
+  font-size: 12.5px;
   font-weight: bold;
-  line-height: 16px;
+  line-height: 1rem;
 }
 .username-others {
   @extend %chatbox-username;
-  color: gainsboro;
+  color: goldenrod;
 }
 .username-me {
   @extend %chatbox-username;
@@ -22,13 +22,12 @@
   @extend %panel-base;
 }
 .message-text {
-  max-width: 100%;
+  min-width: 10%;
+  max-width: 55%;
   width: auto;
-  display: block;
   border-radius: 0.25rem;
   overflow-wrap: break-word;
   padding: 0.25em 0.4em;
-  margin: 0;
 }
 .message-text-font {
   color: white;
@@ -39,7 +38,7 @@
 .message-text-me {
   float: right;
   text-align: right;
-  background-color: #28a745;
+  background-color: forestgreen;
 }
 .message-text-other {
   float: left;

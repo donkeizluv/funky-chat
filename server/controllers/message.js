@@ -1,7 +1,7 @@
 const repo = require("../repo/message");
 const codes = require("../const/status-codes");
 
-exports.message_create = function(req, res, next) {
+exports.create = function(req, res, next) {
   repo
     .create({
       userId: req.body.userId,
@@ -14,7 +14,7 @@ exports.message_create = function(req, res, next) {
     .catch(err => next(err));
 };
 
-exports.message_all = function(req, res) {
+exports.all = function(req, res) {
   repo
     .all()
     .then(docs => res.json(docs))

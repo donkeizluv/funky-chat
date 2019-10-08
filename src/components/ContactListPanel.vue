@@ -1,14 +1,8 @@
 <template>
   <div class="panel panel-border">
-    <b-row
-      v-for="contact in contacts"
-      :key="contact"
-      class="p-1"
-    >
+    <b-row v-for="contact in contacts" :key="contact" class="p-1">
       <b-col>
-        <span class="entry entry-font">
-          {{contact}}
-        </span>
+        <span class="entry entry-font">{{contact}}</span>
       </b-col>
     </b-row>
   </div>
