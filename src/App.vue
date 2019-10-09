@@ -3,6 +3,7 @@
     <app-bg :show="isAuthenticated" />
     <login-modal
       @submit="loginSubmit"
+      @reg="loginRegister"
       :show="!isAuthenticated"
     />
     <b-container
@@ -47,8 +48,8 @@ import ChatBox from "./components/ChatBox.vue";
 import CurrentUserPanel from "./components/CurrentUserPanel.vue";
 import ContactListPanel from "./components/ContactListPanel.vue";
 import AppBg from "./components/shared/AppBackground";
-import { mapActions, mapGetters } from "vuex";
-import { LOGIN, GEN_GUID } from "./store/actions/action-types";
+import { mapGetters } from "vuex";
+// import { LOGIN, GEN_GUID } from "./store/actions/action-types";
 import { isAuthenticated, currentUser } from "./store/getters/getter-types";
 
 export default {
@@ -84,17 +85,16 @@ export default {
     ]
   },
   data() {
-    return {};
+    return {
+      loginModalError: {
+        error: false,
+        message: ""
+      }
+    };
   },
-  methods: {
-    ...mapActions([LOGIN, GEN_GUID]),
-    async loginSubmit(cred) {
-      await this.LOGIN({
-        userId: await this.GEN_GUID(),
-        username: cred.username
-      });
-    }
-  }
+  // methods: {
+  //   ...mapActions([LOGIN, GEN_GUID])
+  // }
 };
 </script>
 

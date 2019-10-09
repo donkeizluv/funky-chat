@@ -7,6 +7,6 @@ router.get("/exists", controller.exists);
 
 router.post("/create", controller.create);
 
-router.post("/validate", controller.validate);
+router.post("/getuser", controller.getUser);
 
 module.exports = router;

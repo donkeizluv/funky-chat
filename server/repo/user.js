@@ -15,8 +15,8 @@ exports.create = async data => {
   return message.save();
 };
 
-exports.validate = async cred => {
-  return !!(await User.validate(cred).exec());
+exports.getUser = async cred => {
+  return await User.validate(cred).exec();
 };
 
 exports.exists = async username => {

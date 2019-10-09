@@ -18,10 +18,10 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.validate = function(req, res) {
+exports.getUser = function (req, res) {
   repo
-    .validate(req.body)
-    .then(r => res.sendStatus(r ? codes.OK : codes.FORBIDDEN))
+    .getUser(req.body)
+    .then(r => res.sendStatus(r ? { userId: r.userId, username: r.username } : codes.FORBIDDEN))
     .catch(() => res.sendStatus(codes.INTERNAL_ERROR));
 };
 
